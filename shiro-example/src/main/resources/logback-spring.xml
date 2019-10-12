@@ -7,7 +7,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/example.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_PATH}/blacklist-importer_%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>${LOG_PATH}/shiro_demo_%d{yyyy-MM-dd}.log</FileNamePattern>
             <MaxHistory>365</MaxHistory>
         </rollingPolicy>
 
