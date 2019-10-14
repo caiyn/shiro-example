@@ -10,3 +10,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 logging:
   path: D:\\logs
+shiro:
+  filterChainDefinitionMap:
+    /logout: logout
+    /**: authc
+    /index2: anon
