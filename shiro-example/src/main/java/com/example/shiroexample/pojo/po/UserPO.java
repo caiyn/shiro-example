@@ -2,16 +2,16 @@ package com.example.shiroexample.pojo.po;
 
 public class UserPO {
 
-    private String id;
+    private String UserId;
     private String userName;
     private String password;
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return UserId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        UserId = userId;
     }
 
     public String getUserName() {

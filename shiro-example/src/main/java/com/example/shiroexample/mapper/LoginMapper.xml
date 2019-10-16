@@ -4,22 +4,25 @@
 <mapper namespace="com.example.shiroexample.mapper.LoginMapper">
     <!-- 从查询结果库中获取数据 -->
     <select id="getUserByName" resultType="com.example.shiroexample.pojo.po.UserPO">
-		select * from user where user_name=#{0}
+		select
+		user_id as userId,user_name as userName,password as password from user
+		where
+		user_name=#{0}
 	</select>
 
     <select id="getRolesByUserName" parameterType="java.lang.String"
             resultType="com.example.shiroexample.pojo.po.RolePO">
-        select a.* from role a
+        select a.role_id as roleId,a.role_name as roleName from role a
         inner join user_role b on a.role_id = b.role_id
         inner join `user` c on c.user_id=b.user_id where c.user_name=#{0}
     </select>
 
     <select id="getPermissionsByRoleName" parameterType="java.lang.String"
             resultType="com.example.shiroexample.pojo.po.PermissionPO">
-        select a.* from resource a
+        select a.resource_id as permissionId,a.resource_name as permissionName from
+        resource a
         inner join role_resource b on a.resource_id = b.resource_id
         inner join role c on c.role_id = b.role_id
-        inner join user_role d on d.role_id = c.role_id
-        inner join `user` e on e.user_id=d.user_id where e.user_name=#{0}
+        where c.role_name=#{0}
     </select>
 </mapper>

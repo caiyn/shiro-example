@@ -2,15 +2,15 @@ package com.example.shiroexample.pojo.po;
 
 public class RolePO {
 
-    private String id;
+    private String RoleId;
     private String roleName;
 
-    public String getId() {
-        return id;
+    public String getRoleId() {
+        return RoleId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setRoleId(String roleId) {
+        RoleId = roleId;
     }
 
     public String getRoleName() {

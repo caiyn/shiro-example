@@ -6,12 +6,12 @@ spring:
     url: jdbc:mysql://192.168.44.132:3306/cyn
     username: caiyn
     password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 logging:
   path: D:\\logs
-shiro:
-  filterChainDefinitionMap:
-    /logout: logout
-    /**: authc
-    /index2: anon
+#shiro:
+#  filterChainDefinitionMap:
+#    /logout: logout
+#    /**: authc
+#    /index2: anon

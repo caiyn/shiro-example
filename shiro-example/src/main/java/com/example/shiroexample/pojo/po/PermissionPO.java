@@ -2,15 +2,15 @@ package com.example.shiroexample.pojo.po;
 
 public class PermissionPO {
 
-    private String id;
+    private String PermissionId;
     private String permissionName;
 
-    public String getId() {
-        return id;
+    public String getPermissionId() {
+        return PermissionId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPermissionId(String permissionId) {
+        PermissionId = permissionId;
     }
 
     public String getPermissionName() {
