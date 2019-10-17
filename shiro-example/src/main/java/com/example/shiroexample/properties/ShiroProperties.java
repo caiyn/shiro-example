@@ -1,4 +1,4 @@
-package com.example.shiroexample.conf;
+package com.example.shiroexample.properties;
 
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -5,6 +5,15 @@ public class UserPO {
     private String UserId;
     private String userName;
     private String password;
+    private String salt;
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     public String getUserId() {
         return UserId;

@@ -8,6 +8,9 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  thymeleaf:
+    cache: false #关闭缓存
+    prefix: classpath:/templates/ #调整页面路径
 logging:
   path: D:\\logs
 #shiro:

@@ -5,7 +5,8 @@
     <!-- 从查询结果库中获取数据 -->
     <select id="getUserByName" resultType="com.example.shiroexample.pojo.po.UserPO">
 		select
-		user_id as userId,user_name as userName,password as password from user
+		user_id as userId,user_name as userName,password as password,salt as salt from
+		user
 		where
 		user_name=#{0}
 	</select>
