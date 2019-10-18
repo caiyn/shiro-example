@@ -11,6 +11,17 @@ spring:
   thymeleaf:
     cache: false #关闭缓存
     prefix: classpath:/templates/ #调整页面路径
+  redis:
+    host: 192.168.44.132
+    port: 36379
+    password: 123456
+    timeout: 3000ms
+    jedis:
+      pool:
+        max-idle: 20
+        min-idle: 20
+        max-active: 200
+        max-wait: 1000ms
 logging:
   path: D:\\logs
 #shiro:
