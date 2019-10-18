@@ -2,7 +2,6 @@ package com.example.shiroexample.controller;
 
 import com.example.shiroexample.pojo.po.UserPO;
 import com.example.shiroexample.service.LoginService;
-import com.example.shiroexample.utils.PasswordUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -62,7 +61,6 @@ public class LoginController {
     @RequiresPermissions("add")//需要有add权限的方可访问
     @RequestMapping("/index")
     public String index() {
-        System.out.println(PasswordUtil.encryptPassword("123456", "7f11"));
         return "index!";
     }
 
