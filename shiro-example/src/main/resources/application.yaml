@@ -19,7 +19,7 @@ spring:
       pool:
         max-idle: 20
         min-idle: 20
-        max-active: 200
+        max-active: 20
         max-wait: 3000ms
 logging:
   path: D:\\logs

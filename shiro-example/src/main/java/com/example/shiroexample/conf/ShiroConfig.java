@@ -1,8 +1,9 @@
 package com.example.shiroexample.conf;
 
-import com.example.shiroexample.properties.ShiroProperties;
+import com.example.shiroexample.filter.KickoutSessionFilter;
 import com.example.shiroexample.realm.ShiroDemoRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -16,6 +17,7 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPool;
@@ -66,6 +68,24 @@ public class ShiroConfig {
         redisSessionDAO.setRedisManager(redisManager());
         return redisSessionDAO;
     }
+
+    @Bean
+    public KickoutSessionFilter kickoutSessionFilter(){
+        KickoutSessionFilter kickoutSessionFilter = new KickoutSessionFilter();
+        //使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的；
+        //这里我们还是用之前shiro使用的ehcache实现的cacheManager()缓存管理
+        //也可以重新另写一个，重新配置缓存时间之类的自定义缓存属性
+        kickoutSessionFilter.setCacheManager(cacheManager());
+        //用于根据会话ID，获取会话进行踢出操作的；
+        kickoutSessionFilter.setSessionManager(redisSessionManager());
+        //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
+        kickoutSessionFilter.setKickoutAfter(false);
+        //同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录；
+        kickoutSessionFilter.setMaxSession(1);
+        //被踢出后重定向到的地址；
+        kickoutSessionFilter.setKickoutUrl("/toLogin?kickout=1");
+        return kickoutSessionFilter;
+    }
     /**
      * shiro session的管理
      */
@@ -73,12 +93,17 @@ public class ShiroConfig {
     public DefaultWebSessionManager redisSessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionDAO(redisSessionDAO());
+//        sessionManager.setCacheManager(redisCacheManager());
         return sessionManager;
     }
     @Bean
-    public RedisCacheManager redisCacheManager() {
+    public CacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
+        //redis中针对不同用户缓存
+//        redisCacheManager.setPrincipalIdFieldName("username");
+        //用户权限信息缓存时间
+//        redisCacheManager.setExpire(200000);
         return redisCacheManager;
     }
     @Bean
@@ -119,7 +144,7 @@ public class ShiroConfig {
         securityManager.setRealm(myShiroRealm());
         securityManager.setRememberMeManager(rememberMeManager());
         securityManager.setSessionManager(redisSessionManager());
-        securityManager.setCacheManager(redisCacheManager());
+        securityManager.setCacheManager(cacheManager());
         return securityManager;
     }
 
@@ -148,9 +173,9 @@ public class ShiroConfig {
 
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor
-            (DefaultWebSecurityManager securityManager) {
+            () {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
         return authorizationAttributeSourceAdvisor;
     }
 }

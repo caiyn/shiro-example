@@ -53,7 +53,7 @@ public class ShiroDemoRealm extends AuthorizingRealm {
         }
         //这里验证authenticationToken和simpleAuthenticationInfo的信息
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
-            user.getUserName(),
+            user,
             user.getPassword(),
             ByteSource.Util.bytes(user.getSalt()),
             getName());

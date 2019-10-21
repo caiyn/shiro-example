@@ -40,7 +40,7 @@ public class LoginController {
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
-                user.getUserName(),
+                user.getUsername(),
                 user.getPassword(),
                 rememberMe
         );
