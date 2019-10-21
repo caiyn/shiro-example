@@ -20,7 +20,7 @@ spring:
         max-idle: 20
         min-idle: 20
         max-active: 200
-        max-wait: 1000ms
+        max-wait: 3000ms
 logging:
   path: D:\\logs
 #shiro:
