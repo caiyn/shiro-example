@@ -17,12 +17,13 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -93,7 +94,6 @@ public class ShiroConfig {
     public DefaultWebSessionManager redisSessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionDAO(redisSessionDAO());
-//        sessionManager.setCacheManager(redisCacheManager());
         return sessionManager;
     }
     @Bean
@@ -163,10 +163,12 @@ public class ShiroConfig {
         //对所有用户认证,从上到下顺序执行，一般将/**放在最下面，否则匿名访问会出错
         //authc表示需要认证才可以访问,anon表示可以匿名访问
         filterChainDefinitionMap.put("/**", "user");
-
+        HashMap<String,Filter> hashMap=new HashMap<String,Filter>();
+        hashMap.put("kickout",kickoutSessionFilter());
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setSuccessUrl("/index");
 //        shiroFilterFactoryBean.setUnauthorizedUrl("/error");
+        shiroFilterFactoryBean.setFilters(hashMap);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
