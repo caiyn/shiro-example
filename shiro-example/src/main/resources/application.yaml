@@ -1,5 +1,5 @@
 server:
-  address: 192.168.44.132
+  address: 127.0.0.1
   port: 3535
 spring:
   datasource:
