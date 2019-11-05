@@ -10,14 +10,6 @@ public class UserPO implements Serializable{
     private String password;
     private String salt;
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
     public String getUserId() {
         return UserId;
     }
@@ -40,5 +32,23 @@ public class UserPO implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    @Override
+    public String toString() {
+        return "UserPO{" +
+                "UserId='" + UserId + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
     }
 }
