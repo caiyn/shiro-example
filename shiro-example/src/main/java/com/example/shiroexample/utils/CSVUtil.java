@@ -29,26 +29,10 @@ public class CSVUtil {
     private static final Logger logger = LoggerFactory.getLogger(CSVUtil.class);
 
     private static String[] generateClazzColumnMapping(Class clazz) {
-//        BeanInfo beanInfo = null;
-//        try {
-//            beanInfo = Introspector.getBeanInfo(clazz);
-//            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-//            for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
-//                System.out.println(propertyDescriptor.getName());
-//            }
-//            return Arrays.stream(propertyDescriptors).filter(p -> p.getPropertyType() != Class.class).map(p -> p.getName()).toArray(String[]::new);
-//        } catch (IntrospectionException e) {
-//            logger.error(e.getMessage(), e);
-//        }
-//        return null;
         Field fields[] = clazz.getDeclaredFields();
         return Arrays.stream(fields).filter(f->!"serialVersionUID".equals(f.getName()))
                 .map
                 (f->f.getName()).toArray(String[]::new);
-//        for (Field field : fields) {
-//            System.out.println(field.getName());
-//        }
-//        return null;
     }
 
     public static void bean2csv(String path, List data, Class clazz) {
